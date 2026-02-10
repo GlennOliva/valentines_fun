@@ -341,6 +341,125 @@
       padding: 2px 6px;
       border-radius: 8px;
     }
+
+    /* =========================
+   ✅ MOBILE RESPONSIVE FIXES
+   Paste this at the END of <style>
+   ========================= */
+
+/* Prevent accidental horizontal scrolling */
+html, body { max-width: 100%; overflow-x: hidden; }
+
+/* Make card fit better on small screens */
+.card{
+  width: min(900px, 100%);
+  padding: clamp(16px, 4vw, 28px);
+}
+
+/* Make the top badges wrap nicely */
+.top{
+  gap: 10px;
+}
+.badge{
+  font-size: 13px;
+  padding: 8px 12px;
+}
+
+/* Better heading + paragraph sizes on mobile */
+h1{
+  font-size: clamp(24px, 6vw, 40px);
+}
+.sub{
+  font-size: clamp(13px, 3.8vw, 16px);
+}
+
+/* Stack the two columns on smaller screens (you already have 820px, but tighten it) */
+@media (max-width: 768px){
+  .grid{
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .panel{
+    padding: 14px;
+  }
+
+  /* Center the button row */
+  .btnRow{
+    justify-content: center;
+    min-height: 66px; /* gives space for the moving "No" button */
+  }
+
+  /* Buttons take more width and are easier to tap */
+  button{
+    width: 100%;
+    max-width: 320px;
+    font-size: 16px;
+    padding: 14px 16px;
+  }
+
+  /* Keep the no button from going too far on small screens */
+  .no{
+    max-width: 320px;
+  }
+
+  /* Scrabble board looks better on phones */
+  .board{
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .slot{
+    height: 40px;
+    border-radius: 12px;
+    font-size: 14px;
+  }
+
+  .tile{
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    font-size: 15px;
+  }
+
+  .rack{
+    gap: 8px;
+  }
+
+  .actions{
+    justify-content: center;
+  }
+
+  .ghost.small{
+    width: auto;
+    min-width: 120px;
+  }
+}
+
+/* Extra small phones (like older iPhones) */
+@media (max-width: 420px){
+  .board{ gap: 5px; }
+  .slot{
+    height: 36px;
+    font-size: 13px;
+  }
+  .tile{
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+
+  .badge{
+    font-size: 12px;
+    padding: 7px 10px;
+  }
+
+  .modal{
+    padding: 18px;
+    border-radius: 18px;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -616,7 +735,8 @@
     const bRect = noBtn.getBoundingClientRect();
 
     const maxX = Math.max(0, rowRect.width - bRect.width);
-    const maxY = 60;
+    const maxY = window.innerWidth < 768 ? 90 : 60;
+
 
     const x = Math.random() * maxX;
     const y = (Math.random() * maxY) - (maxY/2);
